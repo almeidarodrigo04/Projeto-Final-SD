@@ -1,0 +1,9 @@
+
+State Machine - |cpu|state
+Name state.LOAD_ANS state.EXECUTE state.LOAD_MEM state.IMMEDIATE state.DECODE state.FETCH 
+state.FETCH 0 0 0 0 0 0 
+state.DECODE 0 0 0 0 1 1 
+state.IMMEDIATE 0 0 0 1 0 1 
+state.LOAD_MEM 0 0 1 0 0 1 
+state.EXECUTE 0 1 0 0 0 1 
+state.LOAD_ANS 1 0 0 0 0 1 
