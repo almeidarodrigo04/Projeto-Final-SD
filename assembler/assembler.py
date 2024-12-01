@@ -62,12 +62,12 @@ def put_all_labels(line : str, program_position : int, line_number : int):
         return True, program_position
     #Erros dados pela quantidade de palavras nas linhas
     elif len(words) == 1 and (not words[0].endswith(':') and words[0] != 'WAIT'):
-        print('ERRO::quantidade de palavras insuficiente para se exucutar algo')
-        print_error_colored(words, line_number)
+        print('ERRO::quantidade de palavras muito pequena para se exucutar algo')
+        print_error(words, line_number)
         return False, program_position
     elif len(words) > 3:
-        print('ERRO::quantidade excede o maximo para uma instrução')
-        print_error_colored(words, line_number)
+        print('ERRO::quantidade muito grande para uma instrução')
+        print_error(words, line_number)
         return False, program_position
 
     if words[0] in op_dict:
@@ -75,7 +75,7 @@ def put_all_labels(line : str, program_position : int, line_number : int):
         if words[0] == 'WAIT':
             if len(words) != 1:
                 print('ERRO::A instrução WAIT nao deve receber nenhum argumento')
-                print_error_colored(words, line_number)
+                print_error(words, line_number)
                 return False, program_position
 
             program_position += 0
@@ -84,7 +84,7 @@ def put_all_labels(line : str, program_position : int, line_number : int):
         elif words[0] in ('NOT', 'JMP', 'JEQ', 'JGR', 'IN', 'OUT'):
             if len(words) > 2:
                 print(f'ERRO::A instrução {words[0]} não recebe mais de um argumento')
-                print_error_colored(words, line_number)
+                print_error(words, line_number)
                 return False, program_position
             
             #Pode receber apenas uma registradora
@@ -112,11 +112,11 @@ def put_all_labels(line : str, program_position : int, line_number : int):
 
         if label.isdecimal():
             print('Uma label não pode ter como nome um número')
-            print_error_colored(line, line_number)
+            print_error(line, line_number)
         
         if label == 'A' or label == 'B' or label == 'R':
             print('As letras A B e R são reservadas para as registras, labels dessa forma são ilegais')
-            print_error_colored(line, line_number)
+            print_error(line, line_number)
         
         label_dict.update({words[0].removesuffix(':') : (program_position)})
         #Remove 1 na posição do programa pois a label n é suposta estar em nenhum lugar, como lógo após ele sair dessa função ele vai 
