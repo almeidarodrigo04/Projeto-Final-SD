@@ -1,0 +1,3 @@
+MOV A 12
+MOV B 27
+LOAD B 1
