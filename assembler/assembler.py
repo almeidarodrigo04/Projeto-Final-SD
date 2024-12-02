@@ -266,7 +266,7 @@ def main():
     argparser.add_argument('asm_file')
     args = argparser.parse_args()
     with open(args.asm_file, 'r') as input_file:
-        with open('programa.mif', 'w') as mif_file:
+        with open('ram256x8.mif', 'w') as mif_file:
             if args.m:
                 with open('programa.hex', 'w') as hex_file:
                     mif_init(mif_file)

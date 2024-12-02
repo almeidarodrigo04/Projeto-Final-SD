@@ -107,6 +107,10 @@ begin
         variable ers: STD_LOGIC := '0';
 
         variable eflag: STD_LOGIC := '0';
+		  
+		  variable econt: STD_LOGIC := '0';
+		  
+		  variable cont : NATURAL := 0;
 
     begin
         if reset='0' then 
@@ -449,9 +453,17 @@ begin
                         end if;
                     elsif operation = INN then
                         if go = '0' then
-                            state <= LOAD_ANS;
+                            econt := '1';
                         else
-                            state <= EXECUTE;
+                            if econt = '1' then 
+										 cont := cont + 1;
+										 if cont = 25000000 then
+											 econt := '0';
+											 state <= LOAD_ANS;
+										 end if;
+									 else
+										 state <= EXECUTE;
+									 end if;
                         end if;
                     else
                         state <= LOAD_ANS;
