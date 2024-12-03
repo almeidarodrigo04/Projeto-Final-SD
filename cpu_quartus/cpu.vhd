@@ -108,9 +108,9 @@ begin
 
         variable eflag: STD_LOGIC := '0';
 		  
-		  variable econt: STD_LOGIC := '0';
+		variable econt: STD_LOGIC := '0';
 		  
-		  variable cont : NATURAL := 0;
+		variable cont : NATURAL := 0;
 
     begin
         if reset='0' then 
@@ -118,8 +118,6 @@ begin
         elsif rising_edge(clk) then
             case state is
                 when FETCH =>
-                    go <= '1';
-                    w <= '1';
                     address <= pcounter;
                     pcounter := STD_LOGIC_VECTOR(unsigned(pcounter)+1);
                     state <= DECODE;
@@ -335,6 +333,7 @@ begin
                                 pcounter := q; 
                                 address <= pcounter;
                             end if;
+                            pcounter := STD_LOGIC_VECTOR(unsigned(pcounter)-1);
                         when JEQ =>
                             if zero='1' then
                                 if operator2 = "00" then
@@ -350,6 +349,7 @@ begin
                                     pcounter := q; 
                                     address <= pcounter;
                                 end if;
+                                pcounter := STD_LOGIC_VECTOR(unsigned(pcounter)-1);
                             end if;
                         when JGR =>
                             if sinal='0' then
@@ -456,14 +456,15 @@ begin
                             econt := '1';
                         else
                             if econt = '1' then 
-										 cont := cont + 1;
-										 if cont = 25000000 then
-											 econt := '0';
-											 state <= LOAD_ANS;
-										 end if;
-									 else
-										 state <= EXECUTE;
-									 end if;
+								cont := cont + 1;
+								if cont = 5000000 then
+								    econt := '0';
+                                    cont := 0;
+									state <= LOAD_ANS;
+								else
+								    state <= EXECUTE;
+								end if;
+                            end if;
                         end if;
                     else
                         state <= LOAD_ANS;
